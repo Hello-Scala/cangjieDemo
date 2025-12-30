@@ -1,0 +1,38 @@
+# --------- 1. 项目坐标 ----------
+[package]
+name        = "cangjieDemo"          # 包名，也决定输出文件名
+version     = "0.0.1"          # 语义化版本
+type        = "executable"     # 也可选 "library" / "staticlib" / "cdylib"
+authors     = ["SteveZou <stevenzearo@163.com>"]
+description = "Cangjie Demo"
+edition     = "0.0.1"            # 语言 edition，目前固定 1.0
+
+# --------- 2. 构建参数 ----------
+[build]
+# 传给 cjc 的额外 flag，可省
+# cjc-flags = ["-O2", "-g"]
+
+# --------- 3. 依赖 --------------
+[dependencies]
+# 3.1 官方运行时（随 sdk 自带，写不写都行，示例）
+cangjie-runtime = { version = "1.0.*" }
+
+# 3.2 本地路径依赖（同仓库其他模块）
+# libfoo = { path = "../libfoo" }
+
+# 3.3 git 依赖（私有仓库同理）
+# libbar = { git = "https://gitee.com/xxx/libbar.git", tag = "v0.2.0" }
+
+# 3.4 未来支持 registry 后，可简写
+# libbaz = "0.3.0"
+
+# --------- 4. 目标/平台 ----------
+# 默认 host 平台；如需交叉，可打开
+[[bin]]
+name = "demo"
+path = "src/main.cj"   # 若主文件不叫 main.cj，需显式指定
+
+# --------- 5. 工具链覆盖 ----------
+# 强制指定 cjc 版本（很少用）
+# [toolchain]
+# channel = "1.0.0"
