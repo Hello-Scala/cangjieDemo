@@ -1,4 +1,4 @@
-package  PsiDirectory
+package  demo
 
 main() {
     println("Hello, world!")

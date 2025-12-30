@@ -9,8 +9,7 @@ group = "com.helloscala"
 
 version = "1.0-SNAPSHOT"
 // 1. 环境检查
-val cjHome = System.getenv("CANGJIE_HOME") ?: error("Please setup CANGJIE_HOME")
-val cjpm = "${cjHome}/bin/cjpm"          // 统一入口：cjpm
+val cjpm = "cjpm"          // 统一入口：cjpm
 
 // 2. 定义目录
 val cjOutDir = layout.buildDirectory.dir("cj-out").get().asFile   // cjpm 默认输出目录
@@ -48,7 +47,7 @@ subprojects {
         doLast {
             injected.execOps.exec {
                 workingDir = project.projectDir
-                commandLine(cjpm, "build", "--release")
+                commandLine(cjpm, "build")
             }
         }
     }
