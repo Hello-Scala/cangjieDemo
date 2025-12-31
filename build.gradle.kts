@@ -12,7 +12,8 @@ version = "1.0-SNAPSHOT"
 val cjpm = "cjpm"          // 统一入口：cjpm
 
 // 2. 定义目录
-val cjOutDir = layout.buildDirectory.dir("cj-out").get().asFile   // cjpm 默认输出目录
+val outputPath = "target"
+val cjOutDir = layout.buildDirectory.dir(outputPath).get().asFile   // cjpm 默认输出目录
 val exePath = "${cjOutDir}/bin/${project.name}"
 
 interface ExecOpsProvider {
@@ -27,12 +28,30 @@ subprojects {
         module {
             sourceDirs.add(file("src"))          // 源码根
             resourceDirs.add(file("resources"))  // 资源根
-            excludeDirs.add(file("cjpm-output")) // 不索引构建产物
+            excludeDirs.add(file(outputPath)) // 不索引构建产物
         }
     }
 
     val srcDir      = file("${project.projectDir}/src")
     val resourcesDir= file("${project.projectDir}/resources")
+
+    // 1. 构建
+    tasks.register("cjpmRun") {
+        group = "build"
+        description = "Using cjpm run cangjie project module ${project.name}"
+
+        inputs.dir(srcDir)
+        inputs.dir(resourcesDir)
+        inputs.file(file("${project.projectDir}/cjpm.toml"))
+        outputs.dir(file("${project.projectDir}/${outputPath}"))
+        val injected = project.objects.newInstance<ExecOpsProvider>()
+        doLast {
+            injected.execOps.exec {
+                workingDir = project.projectDir
+                commandLine(cjpm, "run")
+            }
+        }
+    }
 
     // 1. 构建
     tasks.register("cjpmBuild") {
@@ -42,7 +61,7 @@ subprojects {
         inputs.dir(srcDir)
         inputs.dir(resourcesDir)
         inputs.file(file("${project.projectDir}/cjpm.toml"))
-        outputs.dir(file("${project.projectDir}/cjpm-output"))
+        outputs.dir(file("${project.projectDir}/${outputPath}"))
         val injected = project.objects.newInstance<ExecOpsProvider>()
         doLast {
             injected.execOps.exec {
@@ -61,7 +80,7 @@ subprojects {
                 workingDir = project.projectDir
                 commandLine(cjpm, "clean")
             }
-            delete(file("${project.projectDir}/cjpm-output"))
+            delete(file("${project.projectDir}/${outputPath}"))
         }
     }
 }

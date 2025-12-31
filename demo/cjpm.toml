@@ -10,8 +10,11 @@ edition     = "1.0"            # 语言 edition，目前固定 1.0
 # --------- 2. 构建参数 ----------
 
 cjc-version = "1.0.4"
-output-type = "executable"
 
+# 输出配置
+output-type = "executable"         # 输出类型: dynamic(动态库)|static(静态库)|executable(可执行文件)
+src-dir = "src"
+target-dir = "target"           # 编译输出目录
 # 传给 cjc 的额外 flag，可省
 # cjc-flags = ["-O2", "-g"]
 
