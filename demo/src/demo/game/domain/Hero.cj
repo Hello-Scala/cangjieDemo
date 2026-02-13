@@ -9,7 +9,7 @@ public class Hero {
         this.name = name
         this.heroType = heroType
     }
-    public func say() {
-        println("I'm ${name}. I'm a ${heroType} Hero!")
+    public func say(): String {
+        return "I'm ${name}. I'm a ${heroType} Hero!"
     }
 }
