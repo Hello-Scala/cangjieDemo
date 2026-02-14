@@ -1,4 +1,4 @@
-package  demo.demo.game.domain
+package  demo.demo.basic.domain
 
 
 public class Hero {

@@ -1,6 +1,7 @@
 package demo
 
-import demo.demo.game.domain.*
+import demo.demo.basic.domain.*
+import demo.demo.basic.service.MathHelper
 
 main() {
     println("Hello, world!")
@@ -11,6 +12,17 @@ main() {
     println("sorted: ${arr}")
     bubbleSorting(arr, true)
     println("reversed: ${arr}")
+
+    println("Addition: ${MathHelper.add(5, 3)}")
+    println("Subtraction: ${MathHelper.subtract(5, 3)}")
+    println("Multiplication: ${MathHelper.multiply(5, 3)}")
+    println("Division: ${MathHelper.divide(5, 3)}")
+    try {
+        println("Division: ${MathHelper.divide(5, 0)}")
+    } catch (e: Exception) {
+        println("Caught an exception: ${e.message}")
+    }
+    println("Power: ${MathHelper.power(5, 3)}")
 }
 
 func bubbleSorting(arr: Array<Int>): Unit {
